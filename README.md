@@ -27,16 +27,12 @@ const otp = ref('')
 
 ### Props
 
-```typescript
-{
-  fields: string
-}
-```
+<div style="font-family: monospace;">
+fields: <span style="color: orange;">number</span>
+</div>
 
 ### Emits
 
-```typescript
-{
-  change: (newValue) => void;
-}
-```
+<div style="font-family: monospace;">
+change: (newValue: <span style="color: orange;">string</span>) => <span style="color: orange;">void</span>
+</div>

@@ -1,52 +1,42 @@
-# v-otp
+# V-OTP
 
-This template should help get you started developing with Vue 3 in Vite.
+### Intro
 
-## Recommended IDE Setup
+an accessible otp input component for use in vue 3.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+### Installation
 
-## Type Support for `.vue` Imports in TS
-
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin) to make the TypeScript language service aware of `.vue` types.
-
-If the standalone TypeScript plugin doesn't feel fast enough to you, Volar has also implemented a [Take Over Mode](https://github.com/johnsoncodehk/volar/discussions/471#discussioncomment-1361669) that is more performant. You can enable it by the following steps:
-
-1. Disable the built-in TypeScript Extension
-    1) Run `Extensions: Show Built-in Extensions` from VSCode's command palette
-    2) Find `TypeScript and JavaScript Language Features`, right click and select `Disable (Workspace)`
-2. Reload the VSCode window by running `Developer: Reload Window` from the command palette.
-
-## Customize configuration
-
-See [Vite Configuration Reference](https://vitejs.dev/config/).
-
-## Project Setup
-
-```sh
-yarn
+```bash
+npm i v-otp
 ```
 
-### Compile and Hot-Reload for Development
+### Basic Usage
 
-```sh
-yarn dev
+```vue
+<script setup>
+import { ref } from 'vue'
+import VOtp from 'v-otp'
+
+const otp = ref('')
+</script>
+
+<template>
+  <VOtp :fields="2" class="w-8 h-8 text-center" @change="(newValue) => (otp = newValue)" />
+</template>
 ```
 
-### Type-Check, Compile and Minify for Production
+### Props
 
-```sh
-yarn build
+```typescript
+{
+  fields: string
+}
 ```
 
-### Run Unit Tests with [Vitest](https://vitest.dev/)
+### Emits
 
-```sh
-yarn test:unit
-```
-
-### Lint with [ESLint](https://eslint.org/)
-
-```sh
-yarn lint
+```typescript
+{
+  change: (newValue) => void;
+}
 ```

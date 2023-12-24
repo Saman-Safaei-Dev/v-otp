@@ -27,12 +27,12 @@ const otp = ref('')
 
 ### Props
 
-<div style="font-family: monospace;">
-fields: <span style="color: orange;">number</span>
-</div>
+| Prop          | Type          | Default       |
+| ------------- | ------------- | ------------- |
+| `fields`      | `number`    | `4`           |
 
 ### Emits
 
-<div style="font-family: monospace;">
-change: (newValue: <span style="color: orange;">string</span>) => <span style="color: orange;">void</span>
-</div>
+| Emit          | Type                         |
+| ------------- | ---------------------------- |
+| `@change`     | `(newValue: string) => void` |

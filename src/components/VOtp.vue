@@ -1,7 +1,6 @@
 <script setup lang="ts">
-import { ref, useAttrs, type InputHTMLAttributes } from 'vue'
-import { convertStringValueToAValidOtpValue, isValidNumber } from '../helpers/validations'
-import { watch } from 'vue'
+import { ref, type InputHTMLAttributes, watch } from 'vue'
+import { rawToOTP, isValidNumber } from '../helpers/validations'
 
 enum KEYBOARD_KEYS {
   TAB = 'Tab',
@@ -12,17 +11,18 @@ enum KEYBOARD_KEYS {
 }
 
 interface VOtpProps extends /* @vue-ignore */ Omit<InputHTMLAttributes, 'onChange'> {
+  modelValue: string
   fields?: number
 }
 
 const emit = defineEmits<{
-  (e: 'change', newValue: string): void
+  (event: 'update:modelValue', value: string): void
+  (event: 'change', value: string): void
 }>()
 
-const attrs = useAttrs()
-const defaultValue = typeof attrs.value === 'string' ? attrs.value : ''
 const props = withDefaults(defineProps<VOtpProps>(), { fields: 5 })
-const values = ref<string[]>(convertStringValueToAValidOtpValue(defaultValue, props.fields))
+
+const values = ref<string[]>(rawToOTP(props.modelValue, props.fields))
 
 const handleChange = (e: Event, inputIndex: number) => {
   const target = e.target as HTMLInputElement
@@ -52,6 +52,8 @@ const focusPrev = (target: HTMLInputElement) => {
   const previousElementSibling = target.previousElementSibling as HTMLInputElement | null
   previousElementSibling?.focus()
 }
+
+// const focusLast
 
 const handleKeyDown = (e: KeyboardEvent) => {
   const target = e.target as HTMLInputElement
@@ -87,7 +89,9 @@ const handlePaste = (e: ClipboardEvent) => {
   e.preventDefault()
 }
 
-watch([values], () => {})
+watch(() => props.modelValue, (newValue) => {
+  values.value = rawToOTP(newValue, props.fields)
+}) 
 </script>
 
 <template>

@@ -1,4 +1,4 @@
-const convertStringValueToAValidOtpValue = (value: string, fields: number): string[] => {
+function rawToOTP(value: string, fields: number): string[] {
   const trimmedValueLength = value.split('').length
 
   if (!trimmedValueLength) {
@@ -14,10 +14,12 @@ const convertStringValueToAValidOtpValue = (value: string, fields: number): stri
       .split('')
       .concat(Array.from({ length: fields - trimmedValueLength }).fill('') as string[])
   }
-  
+
   return value.split('')
 }
 
-const isValidNumber = (value: string) => /^[0-9]*$/.test(value)
+function isValidNumber(value: string) {
+  return /^[0-9]*$/.test(value)
+}
 
-export { convertStringValueToAValidOtpValue, isValidNumber }
+export { rawToOTP, isValidNumber }

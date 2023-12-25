@@ -1,7 +1,5 @@
 # V-OTP
 
-### Intro
-
 an accessible otp input component for use in vue 3.
 
 ### Installation
@@ -21,18 +19,18 @@ const otp = ref('')
 </script>
 
 <template>
-  <VOtp :fields="2" class="w-8 h-8 text-center" @change="(newValue) => (otp = newValue)" />
+  <VOtp v-model="otp" :fields="2" class="w-8 h-8 text-center" />
 </template>
 ```
 
 ### Props
 
-| Prop          | Type          | Default       |
-| ------------- | ------------- | ------------- |
-| `fields`      | `number`    | `4`           |
+| Prop          | Type          | Required      | Default       |
+| ------------- | ------------- | ------------- | ------------- |
+| `fields`      | `number`      | `false`       | `5`           |
 
 ### Emits
 
 | Emit          | Type                         |
 | ------------- | ---------------------------- |
-| `@change`     | `(newValue: string) => void` |
+| `@change`     | `(value: string) => void` |

@@ -2,6 +2,9 @@
   "name": "v-otp",
   "version": "0.0.5",
   "type": "module",
+  "files": [
+    "dist"
+  ],
   "scripts": {
     "dev": "vite",
     "build": "run-p type-check \"build-only {@}\" --",
@@ -45,5 +48,13 @@
   "repository": {
     "url": "https://github.com/Saman-Safaei-Dev/v-otp",
     "type": "git"
-  }
+  },
+  "keywords": [
+    "vue",
+    "otp",
+    "pin-input",
+    "vue3",
+    "input",
+    "component"
+  ]
 }

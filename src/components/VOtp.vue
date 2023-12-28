@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, type InputHTMLAttributes, watch } from 'vue'
+import { ref, type InputHTMLAttributes, watch, useAttrs } from 'vue'
 import { rawToOTP, isValidNumber } from '../helpers/validations'
 
 enum KEYBOARD_KEYS {
@@ -11,7 +11,7 @@ enum KEYBOARD_KEYS {
 }
 
 interface VOtpProps extends /* @vue-ignore */ Omit<InputHTMLAttributes, 'onChange'> {
-  modelValue: string
+  modelValue?: string
   fields?: number
 }
 
@@ -20,9 +20,21 @@ const emit = defineEmits<{
   (event: 'change', value: string): void
 }>()
 
-const props = withDefaults(defineProps<VOtpProps>(), { fields: 5 })
+const createInitialOtp = () => {
+  if (props.modelValue) {
+    return rawToOTP(props.modelValue, props.fields)
+  }
 
-const values = ref<string[]>(rawToOTP(props.modelValue, props.fields))
+  if ('value' in attrs && typeof attrs.value === 'string') {
+    return rawToOTP(attrs.value, props.fields)
+  }
+
+  return rawToOTP('', props.fields)
+}
+
+const attrs = useAttrs()
+const props = withDefaults(defineProps<VOtpProps>(), { fields: 5 })
+const values = ref<string[]>(createInitialOtp())
 
 const handleChange = (e: Event, inputIndex: number) => {
   const target = e.target as HTMLInputElement
@@ -89,9 +101,11 @@ const handlePaste = (e: ClipboardEvent) => {
   e.preventDefault()
 }
 
-watch(() => props.modelValue, (newValue) => {
+watch([() => props.modelValue], ([newValue]) => {
+  if (!newValue) return
+
   values.value = rawToOTP(newValue, props.fields)
-}) 
+})
 </script>
 
 <template>

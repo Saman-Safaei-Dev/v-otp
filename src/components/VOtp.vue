@@ -105,9 +105,15 @@ const handlePaste = (e: ClipboardEvent) => {
 }
 
 watch([() => props.modelValue], ([newValue]) => {
-  if (!newValue || newValue === values.value.join('')) return
+  console.log('before test', { values: values.value, newValue })
+  if (newValue === undefined || newValue === values.value.join('')) return
 
+  console.log('test')
   values.value = rawToOTP(newValue, props.fields)
+  console.log({
+    values: values.value,
+    newValue
+  })
 })
 
 watch(values, (newValues) => {

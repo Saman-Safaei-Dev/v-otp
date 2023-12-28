@@ -56,6 +56,9 @@
     "pin-input",
     "vue3",
     "input",
-    "component"
+    "component",
+    "one-time-password",
+    "accessible",
+    "unstyled"
   ]
 }

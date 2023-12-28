@@ -18,6 +18,7 @@ interface VOtpProps extends /* @vue-ignore */ Omit<InputHTMLAttributes, 'onChang
 const emit = defineEmits<{
   (event: 'update:modelValue', value: string): void
   (event: 'change', value: string): void
+  (event: 'complete', value: string): void
 }>()
 
 const createInitialOtp = () => {
@@ -44,6 +45,7 @@ const handleChange = (e: Event, inputIndex: number) => {
     return (values.value = Array.from(values.value))
 
   values.value = values.value.map((oldValue, index) => (index === inputIndex ? newValue : oldValue))
+  emit('update:modelValue', values.value.join(''))
   emit('change', values.value.join(''))
 
   if (newValue) focusNext(target)
@@ -95,6 +97,7 @@ const handlePaste = (e: ClipboardEvent) => {
 
   if (isValidNumber(copiedText) && copiedText.length === props.fields) {
     emit('change', copiedText)
+    emit('update:modelValue', copiedText)
     values.value = copiedText.split('')
   }
 
@@ -102,9 +105,13 @@ const handlePaste = (e: ClipboardEvent) => {
 }
 
 watch([() => props.modelValue], ([newValue]) => {
-  if (!newValue) return
+  if (!newValue || newValue === values.value.join('')) return
 
   values.value = rawToOTP(newValue, props.fields)
+})
+
+watch(values, (newValues) => {
+  if (newValues.join('').length === props.fields) emit('complete', newValues.join(''))
 })
 </script>
 

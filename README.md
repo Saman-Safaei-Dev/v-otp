@@ -33,4 +33,5 @@ const otp = ref('')
 
 | Emit          | Type                         |
 | ------------- | ---------------------------- |
-| `@change`     | `(value: string) => void` |
+| `@change`     | `(value: string) => void`    |
+| `@complete`   | `(value: string) => void`    |
